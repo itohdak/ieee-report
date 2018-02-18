@@ -1,0 +1,118 @@
+%% from motion_generator
+Although, there are few constraints between the right hand and the left hand when manipulating flexible objects %% or executing grasp-less manipulations
+like the example above, they will emerge when we want to manipulate rigid objects; the distance between both hands and the orientation of each hand. In such situation, instead of the \equref{desired_hand_pos}, we introduce a new equation to decide the target coordinates of the robot hands as below.
+
+\begin{align}
+  \left(
+  \begin{array}{r}
+    ^{f}\!x^{rbt}_{h}\\
+    ^{f}\!y^{rbt}_{h}\\
+    ^{f}\!z^{rbt}_{h}\\
+  \end{array}
+  \right)
+  &=
+  \left(
+  \begin{array}{r}
+    \bar{x}^{hmn}\\
+    \bar{y}^{hmn}\\
+    \bar{z}^{hmn}\\
+  \end{array}
+  \right)\\
+  &+
+  R_x(\theta)
+  \left(
+  \begin{array}{r}
+    ^{f}\!{x}^{rbt}_{h,init}-\bar{x}^{rbt}_{init}\\
+    ^{f}\!{y}^{rbt}_{h,init}-\bar{y}^{rbt}_{init}\\
+    ^{f}\!{z}^{rbt}_{h,init}-\bar{z}^{rbt}_{init}\\
+  \end{array}
+  \right),\\
+  \left(
+  \begin{array}{r}
+    \alpha^{rbt}_{h}\\
+    \beta^{rbt}_{h}\\
+    \gamma^{rbt}_{h}\\
+  \end{array}
+  \right)
+  &=
+  R_x(\theta)
+  \left(
+  \begin{array}{r}
+    ^{f}\!{\alpha^{rbt}_{h,init}}\\
+    ^{f}\!{\beta^{rbt}_{h,init}}\\
+    ^{f}\!{\gamma^{rbt}_{h,init}}\\
+  \end{array}
+  \right)\\
+        {\rm where} \ \
+        \left(
+        \begin{array}{r}
+          \bar{x}^{hmn}\\
+          \bar{y}^{hmn}\\
+          \bar{z}^{hmn}\\
+        \end{array}
+        \right)
+        &=
+        \frac{1}{2}
+        \left\{
+        \left(
+        \begin{array}{r}
+          ^{f}\!{x}^{hmn}_{rh}\\
+          ^{f}\!{y}^{hmn}_{rh}\\
+          ^{f}\!{z}^{hmn}_{rh}\\
+        \end{array}
+        \right)
+        +
+        \left(
+        \begin{array}{r}
+          ^{f}\!{x}^{hmn}_{lh}\\
+          ^{f}\!{y}^{hmn}_{lh}\\
+          ^{f}\!{z}^{hmn}_{lh}\\
+        \end{array}
+        \right)\right\} \nonumber,\\
+        \left(
+        \begin{array}{r}
+          \bar{x}^{rbt}_{init}\\
+          \bar{y}^{rbt}_{init}\\
+          \bar{z}^{rbt}_{init}\\
+        \end{array}
+        \right)
+        &=
+        \frac{1}{2}
+        \left\{
+        \left(
+        \begin{array}{r}
+          ^{f}\!{x}^{rbt}_{rh,init}\\
+          ^{f}\!{y}^{rbt}_{rh,init}\\
+          ^{f}\!{z}^{rbt}_{rh,init}\\
+        \end{array}
+        \right)
+        +
+        \left(
+        \begin{array}{r}
+          ^{f}\!{x}^{rbt}_{lh,init}\\
+          ^{f}\!{y}^{rbt}_{lh,init}\\
+          ^{f}\!{z}^{rbt}_{lh,init}\\
+        \end{array}
+        \right)\right\} \nonumber
+\end{align}
+
+\(R_x(\theta)\) represents the rotation matrix around the x axis in the robot base frame. \(\theta\) represents the inclination angle between the two hands compared with the horizontal position, and is calculated by referring two positions of the human hands.
+
+
+%% from introduction
+
+%% It is difficult for robots to decide their motions suitable for the circumstances on their own. However, since a humanoid robot has a human-like body structure, the robot can observe the human motions and take them into account when the robot takes an action.
+%% In this study, we sort the types of action required in a series of cooperative tasks according to the transferring scale in the manipulation or the body part used in it. Realizing the motion in each type of action with integrating visual recognition for observing and imitating the human motions, and the haptic information and the aural instruction for modifying those motions in the feedback layer, we propose the whole framework where those robot motions can be switched and activated alternatively by simple human signals.
+
+%% Superiority of this system can be described with the ability in general use and the flexibility to rearrange if failed. The autonomous robot motions and the high-quality human decision making are integrated in this proposed system.
+
+%% robot autonomous execution in local purpose action based on perceptual processing
+
+%% the superior system with the ability in the general use and the flexibility to restart if failed.
+
+%% The system where the autonomy of the robot and the human high-quality decision making are integrated.
+
+%% Manipulation of objects is one of the most important and necessary abilities for humanoid robots in daily life environment.
+%% In household situation where humans and robots exist in the same environment, humanoid robots can be great partners for humans, working together to execute various tasks, especially those that are troublesome to perform alone because of the size or the weight of manipulated objects shown in \figref{overview} (e.g. folding a large table cloth or moving a large board). Humanoid robots will be helpful if they can move as humans desire them to and instruct them to.\par
+%% On the other hand, cooperative works between a human and a humanoid robot not only help the human, but also benefit the robot itself. It is generally difficult for robots to decide their motions suitable for the circumstances on their own. However, since a humanoid robot has a human-like body structure (e.g. a 7 DoF arm or a head with a vision sensor), the robot can observe the human motions and take them into account when the robot takes an action.\par
+%% In this research, we propose a system for human-robot cooperative tasks manipulating one large object at the same time. The point in such works is that the robot is expected to take actions according to the human needs. In addition to the motion generation based on the human motion imitation, we combined the aural human interface so that the human can ask the robot work whenever he/she want the robot to help him/her.
