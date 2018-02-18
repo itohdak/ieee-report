@@ -9,32 +9,37 @@
 % See the \addtolength command later in the file to balance the column lengths
 % on the last page of the document
 
-\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{siunitx}
+\usepackage[dvipdfmx]{graphicx}
 \graphicspath{{figs/}}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{algorithm}
-\usepackage{algpseudocode}
+\usepackage{algorithmic}
+%% \usepackage{algpseudocode}
 \usepackage{times}
+\usepackage[subrefformat=parens,font=footnotesize]{subcaption}
+\usepackage{wrapfig}
+%% \usepackage{nidanfloat}
+\captionsetup[figure]{font=footnotesize}
 %
-\newcommand{\figref}[1]{Fig.~\ref{figure:#1}}
-\newcommand{\tabref}[1]{Table~\ref{table:#1}}
+\newcommand{\figref}[1]{Fig.\ref{figure:#1}}
+\newcommand{\tabref}[1]{Table \ref{table:#1}}
+\newcommand{\secref}[1]{Sec.\ref{sec:#1}}
+\newcommand{\subsecref}[1]{Sec.\ref{subsec:#1}}
+\newcommand{\equref}[1]{Eq.\ref{equation:#1}}
 \newcommand{\argmax}{\operatornamewithlimits{argmax}}
 \newcommand{\argmin}{\operatornamewithlimits{argmin}}
 
 \title{\LARGE \bf
-Preparation of Papers for IEEE Sponsored Conferences \& Symposia*
+A Framework for Robots to Learn New Motions \\ from Human Demonstration through Aural Communication
 }
 
 
-\author{Albert Author$^{1}$ and Bernard D. Researcher$^{2}$% <-this % stops a space
-\thanks{*This work was not supported by any organization}% <-this % stops a space
-\thanks{$^{1}$Albert Author is with Faculty of Electrical Engineering, Mathematics and Computer Science,
-        University of Twente, 7500 AE Enschede, The Netherlands
-        {\tt\small albert.author@papercept.net}}%
-\thanks{$^{2}$Bernard D. Researcheris with the Department of Electrical Engineering, Wright State University,
-        Dayton, OH 45435, USA
-        {\tt\small b.d.researcher@ieee.org}}%
+\author{Hideaki Ito\\
+  The University of Tokyo, JSK Lab
 }
 
 
@@ -44,14 +49,23 @@ Preparation of Papers for IEEE Sponsored Conferences \& Symposia*
 \thispagestyle{empty}
 \pagestyle{empty}
 
-\begin{abstract}
-\input src/abst.tex
-\end{abstract}
+\setlength{\floatsep}{2pt} %dblfloatsep
+\setlength{\textfloatsep}{2pt} %dbltextfloatsep
 
-\input src/intro.tex
-\input src/procedure.tex
-\input src/math.tex
-\input src/howto.tex
+%\setlength{\intextsep}{4pt}
+%\setlength{\abovecaptionskip}{2pt}
+
+%\setlength{\abovedisplayskip}{5pt} % margin of top
+%\setlength{\belowdisplayskip}{5pt} % margin of bottom
+
+%% \begin{abstract}
+%% \input src/abst.tex
+%% \end{abstract}
+
+\input src/introduction.tex
+\input src/motion_generator.tex
+\input src/label_motion.tex
+\input src/experiments.tex
 \input src/conclusion.tex
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
@@ -61,10 +75,12 @@ Preparation of Papers for IEEE Sponsored Conferences \& Symposia*
                                   % so it should come on the page before the last. Make
                                   % sure that you do not shorten the textheight too much.
 
-\input src/appendix.tex
-\input src/acknowledge.tex
+%% \input src/appendix.tex
+%% \input src/acknowledge.tex
 
 \bibliographystyle{junsrt}
 \bibliography{main}
 
 \end{document}
+
+
