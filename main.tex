@@ -16,25 +16,25 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{times}
+\usepackage{bm}
+\usepackage{array}
 %
 \newcommand{\figref}[1]{Fig.~\ref{figure:#1}}
 \newcommand{\tabref}[1]{Table~\ref{table:#1}}
+\renewcommand{\eqref}[1]{Eq.~(\ref{equation:#1})}
+\newcommand{\subsecref}[1]{Sec.~\ref{subsection:#1}}
+\newcommand{\secref}[1]{Sec.~\ref{section:#1}}
 \newcommand{\argmax}{\operatornamewithlimits{argmax}}
 \newcommand{\argmin}{\operatornamewithlimits{argmin}}
 
 \title{\LARGE \bf
-Preparation of Papers for IEEE Sponsored Conferences \& Symposia*
+  Learning Daily Task Motions for Humanoid Robot\\
+  with Stochastic Model of Human Demonstration
 }
 
 
-\author{Albert Author$^{1}$ and Bernard D. Researcher$^{2}$% <-this % stops a space
-\thanks{*This work was not supported by any organization}% <-this % stops a space
-\thanks{$^{1}$Albert Author is with Faculty of Electrical Engineering, Mathematics and Computer Science,
-        University of Twente, 7500 AE Enschede, The Netherlands
-        {\tt\small albert.author@papercept.net}}%
-\thanks{$^{2}$Bernard D. Researcheris with the Department of Electrical Engineering, Wright State University,
-        Dayton, OH 45435, USA
-        {\tt\small b.d.researcher@ieee.org}}%
+\author{Hideaki Ito\\
+  The University of Tokyo, JSK Lab.
 }
 
 
@@ -44,14 +44,13 @@ Preparation of Papers for IEEE Sponsored Conferences \& Symposia*
 \thispagestyle{empty}
 \pagestyle{empty}
 
-\begin{abstract}
-\input src/abst.tex
-\end{abstract}
+%% \begin{abstract}
+%% \input src/abst.tex
+%% \end{abstract}
 
 \input src/intro.tex
-\input src/procedure.tex
-\input src/math.tex
-\input src/howto.tex
+\input src/learning.tex
+\input src/experiment.tex
 \input src/conclusion.tex
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
@@ -61,8 +60,8 @@ Preparation of Papers for IEEE Sponsored Conferences \& Symposia*
                                   % so it should come on the page before the last. Make
                                   % sure that you do not shorten the textheight too much.
 
-\input src/appendix.tex
-\input src/acknowledge.tex
+%% \input src/appendix.tex
+%% \input src/acknowledge.tex
 
 \bibliographystyle{junsrt}
 \bibliography{main}

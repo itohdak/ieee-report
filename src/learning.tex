@@ -1,0 +1,71 @@
+\def\muv{\bm{\mu}}
+\def\uv{\bm{u}}
+\def\A{\bm{A}}
+\def\B{\bm{B}}
+\def\Q{\bm{Q}}
+\def\R{\bm{R}}
+\def\S{\bm{S}}
+\def\Sigmav{\bm{\Sigma}}
+\def\zetav{\bm{\zeta}}
+
+\section{Learning Stochastic Models}
+
+In this section, we introduce the stochastic model to express human demonstrations in \secref{encoding}, and describe how to reproduce a certain trajectory using the learned model in \secref{decoding}.
+
+ %% \tabref{} shows the notations used to explain in this section.
+%% \[
+%% \begin{array}{|ll|} \hline
+%%   \zetav & \mbox{State. \( \zetav = [ \bm{x}^\top, \bm{\dot{x}^\top} ]^\top \)} \\
+%%   %% & \mbox{index \(t\) represent the timestep} \\
+%%   \uv & \mbox{Input in the linear system} \\
+%%   \A & \mbox{State matrix in the linear system} \\
+%%   \B & \mbox{Input matrix in the linear system} \\
+%%   \hline
+%% \end{array}
+%% \]
+
+\subsection{Task Generalization using HMM}
+\label{section:encoding}
+We use Hidden Markov Model (HMM) to generalize task motions and learn stochastic models from human demonstrations. HMM is a model assumed to be a Markov process with unobservable states, and so that, can deal with time series data, which is trajectory data of hands (or robot grippers) in our case. The parameters in HMM is computed by EM algorithm. With the transition probability, the output probability of \(i\) th state can be acquired with the form of distribution \( \mathcal{N}(\muv_i, \Sigmav_i) \).
+
+\subsection{Trajectory Reproduction using LQR}
+\label{section:decoding}
+The trajectory can be reproduced by solving Linear Quadratic Regulator (LQR) problem, which estimates an optimized controller input \(\uv_t\) for each descrete timestep in the linear dynamical system,
+
+\begin{align}
+  \zetav_{t+1} &= \A_t \zetav_t + \B_t \uv_t,
+\end{align}
+which can be transformed into the matrix form, by considering a linear uncontrained problem and expressing all future states \(\zetav_t\) with the initial state \(\zetav_1\);
+
+\begin{align}
+  \label{equation:linear_matrix_form}
+  \zetav &= \S_{\zetav} \zetav_1 + \S_{\uv} \uv.
+\end{align}
+
+Now, under the linear unconstrained system represented in \eqref{linear_matrix_form}, LQR problem is expressed as the minimization of the cost,
+\begin{align}
+  \label{equation:cost_function}
+  c &= \sum^T_{t=1} \left( (\muv_t - \zetav_t)^\top \Q_t (\muv_t - \zetav_t) + \uv_t^\top \R_t \uv_t \right) \nonumber \\
+    &= (\muv_s - \zetav_s)^\top \Q_s (\muv_s - \zetav_s) + \uv_s^\top \R_s \uv_s.
+\end{align}
+
+The computation of the above optimization problem leads to a distribution \( \mathcal{N}(\hat\zetav, \hat\Sigmav_{\zetav}) \) in task space with paramerters (See \cite{HMM_LQR} for more details),
+\begin{align}
+  \hat\zetav &= \S_{\zetav} \zetav_1 + \S_{\uv} \hat\uv \label{equation:zeta} \\
+  \hat\Sigmav_{\zetav} &= \S_{\uv} \left( \S_{\uv}^\top \Q_s \S_{\uv} + \R_s \right)^{-1} \S_{\uv}^\top. \label{equation:sigma} \\
+  \mbox{with} \ \ \ \ \hat\uv &= \hat\Sigmav_{\uv} \S_{\uv}^\top \Q_s \left( \muv_s - \S_{\zetav} \zetav_1 \right) \nonumber \\
+  \hat\Sigmav_{\uv} &= \left( \S_{\uv}^\top \Q_s \S_{\uv} + \R_s \right)^{-1} \nonumber
+\end{align}
+
+Assuming \( \Q_t \) and \( \muv_t \) to be the HMM parameters \( \Sigmav^{-1}_{s_t} \) and \( \muv_{s_t} \) in the stepwise references, the trajectory can be estimated and reproduced though the whole steps by \eqref{zeta} and \eqref{sigma} (\( \R_t \), which is a regularization term to consider the smoothness of the reproduced trajectory, is set as \( \rho \bm{I} \)).
+
+
+\subsection{Trajectory Reproduction with Multi Coordinates}
+\label{subsection:multi_coordinates}
+When the task is something like approaching things or pushing buttons, it is not enough only to consider the sequence referenced from the absolute coordinate system (world coordinate system). To take both the task coordinates (ex. robot grippers) and the target coordinates (ex. objects to be reached) into account, we can simply replace the first term in \eqref{cost_function} with
+\begin{align}
+  \sum_{i=1}^2 {(\muv_{s, i} - \zetav_s)^\top \Q_{s, i} (\muv_{s, i} - \zetav_s)}. \nonumber
+\end{align}
+The replaced minimization problem can be solved in the same way as before, yeilding a new distribution \( \mathcal{N}(\hat\zetav_{multi}, \hat\Sigmav_{{\zetav}_{multi}}) \). It can be proven that \( \mathcal{N}(\hat\zetav_{multi}, \hat\Sigmav_{{\zetav}_{multi}}) \) corresponds to the product of the two Gaussians \( \mathcal{N}(\hat\zetav_{1}, \hat\Sigmav_{{\zetav}_{1}}) \) and \( \mathcal{N}(\hat\zetav_{2}, \hat\Sigmav_{{\zetav}_{2}}) \), which is the distribution yeilded by solving \eqref{cost_function} separately in each coordinate system (See \cite{multi_coordinates} for more details).
+
+
